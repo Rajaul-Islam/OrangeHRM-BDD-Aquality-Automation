@@ -12,11 +12,11 @@ Feature: Login Functionality
     And I click the login button
     Then I should see the dashboard page
 
-#  Scenario: TC_Login_02 - Verify error message for invalid credentials
-#    When I enter username "invalidUser"
-#    And I enter password "wrongPass"
-#    And I click the login button
-#    Then I should see an error message "Invalid credentials"
+  Scenario: TC_Login_02 - Verify error message for invalid credentials
+    When I enter username "invalidUser"
+    And I enter password "wrongPass"
+    And I click the login button
+    Then I should see an error message "Invalid credentials"
 #
 #  Scenario: TC_Login_03 - Verify login with blank username
 #    When I leave the username field empty
