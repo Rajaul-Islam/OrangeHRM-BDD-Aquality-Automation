@@ -11,7 +11,8 @@ import pages.LoginPage;
 public class LoginPageSteps {
     LoginPage loginPage = new LoginPage();
     DashboardPage dashBoardpage = new DashboardPage();
-//    Given I open the OrangeHRM login page
+
+    //    Given I open the OrangeHRM login page
 //
 //    Scenario: TC_Login_01 - Verify successful login with valid credentials
 //    When I enter username "Admin"
@@ -22,20 +23,30 @@ public class LoginPageSteps {
     public void openLoginPage() {
         Assert.assertTrue(loginPage.state().waitForDisplayed(), "Login page is not displayed");
     }
+
     @When("I enter username {string}")
     public void enterUsername(String username) {
         loginPage.enterUsername(username);
     }
+
     @And("I enter password {string}")
     public void enterPassword(String password) {
         loginPage.enterPassword(password);
     }
+
     @And("I click the login button")
     public void clickLoginButton() {
         loginPage.clickLoginButton();
     }
+
     @Then("I should see the dashboard page")
     public void verifyDashboardPage() {
         Assert.assertTrue(dashBoardpage.state().waitForDisplayed(), "Dashboard page is not displayed");
+    }
+
+    @Then("I should see an error message {string}")
+    public void verifyErrorMessage(String expectedError) {
+        String actualError = loginPage.getErrorMessageText();
+        Assert.assertEquals(actualError.trim(), expectedError, "Error message does not match");
     }
 }

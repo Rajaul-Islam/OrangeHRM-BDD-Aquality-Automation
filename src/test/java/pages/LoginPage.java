@@ -1,9 +1,13 @@
 package pages;
 
 import aquality.selenium.elements.interfaces.IButton;
+import aquality.selenium.elements.interfaces.ILabel;
 import aquality.selenium.elements.interfaces.ITextBox;
 import aquality.selenium.forms.Form;
+import constants.LocatorConstants;
 import org.openqa.selenium.By;
+
+import static constants.LocatorConstants.PRECISE_TEXT_XPATH;
 
 public class LoginPage extends Form {
     public LoginPage() {
@@ -13,6 +17,7 @@ public class LoginPage extends Form {
     public final ITextBox usernameTextBox = getElementFactory().getTextBox(By.name("username"), "Username TextBox");
     public final ITextBox passwordTextBox = getElementFactory().getTextBox(By.name("password"), "Password TextBox");
     public final IButton loginButton = getElementFactory().getButton(By.cssSelector("button[type='submit']"), "Login Button");
+    public final ILabel invalidCredentialsLabel = getElementFactory().getLabel(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH,"Invalid credentials")), "Invalid Credentials Label");
 
     public void enterUsername(String username) {
         usernameTextBox.clearAndType(username);
@@ -24,5 +29,13 @@ public class LoginPage extends Form {
 
     public void clickLoginButton() {
         loginButton.click();
+    }
+
+    public boolean isInvalidCredentialsLabelDisplayed() {
+        return invalidCredentialsLabel.state().isDisplayed();
+    }
+
+    public String getErrorMessageText() {
+        return invalidCredentialsLabel.getText();
     }
 }
