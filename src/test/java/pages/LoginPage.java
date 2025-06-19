@@ -18,12 +18,20 @@ public class LoginPage extends Form {
     public final ITextBox passwordTextBox = getElementFactory().getTextBox(By.name("password"), "Password TextBox");
     public final IButton loginButton = getElementFactory().getButton(By.cssSelector("button[type='submit']"), "Login Button");
     public final ILabel invalidCredentialsLabel = getElementFactory().getLabel(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH,"Invalid credentials")), "Invalid Credentials Label");
-
+    public final ILabel emptyTextFieldErrorLabel = getElementFactory().getLabel(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH,"Required")), "Empty Text Field Error Label");
     public void enterUsername(String username) {
         usernameTextBox.clearAndType(username);
     }
 
+    public void emptyUsername() {
+        usernameTextBox.clearAndType("");
+    }
+
     public void enterPassword(String password) {
+        passwordTextBox.clearAndType(password);
+    }
+
+    public void emptyPassword(String password) {
         passwordTextBox.clearAndType(password);
     }
 
@@ -31,11 +39,14 @@ public class LoginPage extends Form {
         loginButton.click();
     }
 
-    public boolean isInvalidCredentialsLabelDisplayed() {
-        return invalidCredentialsLabel.state().isDisplayed();
-    }
-
     public String getErrorMessageText() {
         return invalidCredentialsLabel.getText();
     }
+
+    public String getEmptyTextFieldErrorMessage() {
+        return emptyTextFieldErrorLabel.getText();
+    }
+
+    public boolean emptyTextFieldErrorMessage() {
+        return emptyTextFieldErrorLabel.state().isDisplayed();}
 }

@@ -29,9 +29,19 @@ public class LoginPageSteps {
         loginPage.enterUsername(username);
     }
 
+    @When("I leave the username field empty")
+    public void leaveUsernameEmpty() {
+        loginPage.emptyUsername();
+    }
+
     @And("I enter password {string}")
     public void enterPassword(String password) {
         loginPage.enterPassword(password);
+    }
+
+    @And("I leave the password field empty")
+    public void leavePasswordEmpty() {
+        loginPage.emptyPassword("");
     }
 
     @And("I click the login button")
@@ -48,5 +58,12 @@ public class LoginPageSteps {
     public void verifyErrorMessage(String expectedError) {
         String actualError = loginPage.getErrorMessageText();
         Assert.assertEquals(actualError.trim(), expectedError, "Error message does not match");
+    }
+
+    @Then("I should see an empty text field error message with {string} text")
+    public void verifyEmptyTextFieldErrorMessage(String expectedError) {
+        String actualError = loginPage.getEmptyTextFieldErrorMessage();
+        System.out.println("Actual: [" + actualError + "], Expected: [" + expectedError + "]");
+        Assert.assertEquals(actualError.trim(), expectedError.trim(), "Empty text field error message does not match");
     }
 }
