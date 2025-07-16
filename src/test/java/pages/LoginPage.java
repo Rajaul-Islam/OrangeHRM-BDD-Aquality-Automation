@@ -4,49 +4,58 @@ import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.ILabel;
 import aquality.selenium.elements.interfaces.ITextBox;
 import aquality.selenium.forms.Form;
-import constants.LocatorConstants;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static constants.LocatorConstants.PRECISE_TEXT_XPATH;
-
 public class LoginPage extends Form {
+    private static final By pageTitle = By.cssSelector(".orangehrm-login-title");
+    private final ITextBox usernameTextbox = getElementFactory().getTextBox(By.cssSelector("[name='username']"), "Username TextBox");
+    private final ITextBox passwordTextbox = getElementFactory().getTextBox(By.cssSelector("input[name='password']"), "Password text box");
+    private final ILabel requiredTextField = getElementFactory().getLabel(By.xpath("//span[text()='Required']"), "required error Text");
+    private final IButton submitButton = getElementFactory().getButton(By.cssSelector("button[type='submit']"), "Submit button");
+    private final ILabel invalidErrorField = getElementFactory().getLabel(By.xpath("//p[text()='Invalid credentials']"), "Invalid credential label");
+
     public LoginPage() {
-        super(By.cssSelector(".orangehrm-login-title"), "Login Page");
+        super(pageTitle, "Login Page");
     }
 
-    public final ITextBox usernameTextBox = getElementFactory().getTextBox(By.name("username"), "Username TextBox");
-    public final ITextBox passwordTextBox = getElementFactory().getTextBox(By.name("password"), "Password TextBox");
-    public final IButton loginButton = getElementFactory().getButton(By.cssSelector("button[type='submit']"), "Login Button");
-    public final ILabel invalidCredentialsLabel = getElementFactory().getLabel(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH,"Invalid credentials")), "Invalid Credentials Label");
-    public final ILabel emptyTextFieldErrorLabel = getElementFactory().getLabel(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH,"Required")), "Empty Text Field Error Label");
+    @Step("Enter user valid usernaem")
     public void enterUsername(String username) {
-        usernameTextBox.clearAndType(username);
+        usernameTextbox.clearAndType(username);
     }
 
+    @Step("Remain username empty")
     public void emptyUsername() {
-        usernameTextBox.clearAndType("");
+        usernameTextbox.clearAndType("");
     }
 
+    @Step("Enter valid password")
     public void enterPassword(String password) {
-        passwordTextBox.clearAndType(password);
+        passwordTextbox.clearAndType(password);
     }
 
+    @Step("Remain password filed empty")
     public void emptyPassword(String password) {
-        passwordTextBox.clearAndType(password);
+        passwordTextbox.clearAndType(password);
     }
 
+    @Step("Click on login button")
     public void clickLoginButton() {
-        loginButton.click();
+        submitButton.click();
     }
 
+    @Step("Ge the error message for invalid user")
     public String getErrorMessageText() {
-        return invalidCredentialsLabel.getText();
+        return invalidErrorField.getText();
     }
 
+    @Step("Get the error message for empty username")
     public String getEmptyTextFieldErrorMessage() {
-        return emptyTextFieldErrorLabel.getText();
+        return requiredTextField.getText();
     }
 
+    @Step("Get the error message for empty password")
     public boolean emptyTextFieldErrorMessage() {
-        return emptyTextFieldErrorLabel.state().isDisplayed();}
+        return requiredTextField.state().isDisplayed();
+    }
 }

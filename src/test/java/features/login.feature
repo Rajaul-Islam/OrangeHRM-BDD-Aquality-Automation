@@ -4,7 +4,7 @@ Feature: Login Functionality
   So that I can securely access the system
 
   Background:
-    Given I open the OrangeHRM login page
+    When I open the OrangeHRM login page
 
   Scenario: TC_Login_01 - Verify successful login with valid credentials
     When I enter username "Admin"
