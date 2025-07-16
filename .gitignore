@@ -11,6 +11,7 @@ target/
 build/
 out/
 bin/
+allure-results/
 .gradle/
 node_modules/
 # System
